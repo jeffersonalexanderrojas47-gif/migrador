@@ -405,7 +405,7 @@ def init_db():
             ('jeffersonrojas@worldoffice.com.co','2','Jefferson Rojas','JR','3102666736','admin'),
             ('fabiobarahona@worldoffice.com.co','3','Fabio Barahona','FB','','user'),
             ('jorgerojas@worldoffice.com.co','3','Jorge Rojas','JO','','user'),
-            ('usuario@usuario','1','usuarios','SN','','user'),
+            ('usuario@usuario','2','usuarios','SN','','user'),
         ]:
             if not db.execute("SELECT id FROM users WHERE email=?", (email,)).fetchone():
                 db.execute("INSERT INTO users (email,password_hash,name,initials,phone,role) VALUES (?,?,?,?,?,?)",
