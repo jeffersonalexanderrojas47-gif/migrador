@@ -405,6 +405,10 @@ def init_db():
             ('jeffersonrojas@worldoffice.com.co','2','Jefferson Rojas','JR','3102666736','admin'),
             ('fabiobarahona@worldoffice.com.co','3','Fabio Barahona','FB','','user'),
             ('Cpedraza836@gmail.com','123Cpedraza836','CAMILO PEDRAZA','JO','','user'),
+            ('contabilidad1981@gmail.com','123contabilidad198','Nidia Peña','JO','','user'),
+            ('elizabethgarzongarcia@hotmail.com','123elizabethgarzon','Elizabeth Garzon','JO','','user'),
+            ('jheremygarzon978@gmail.com','123jheremygarzon97','Jheremy Garzon','JO','','user'),
+
             ('usuario@usuario','2','usuarios','SN','','user'),
         ]:
             if not db.execute("SELECT id FROM users WHERE email=?", (email,)).fetchone():
