@@ -435,7 +435,7 @@ def init_db():
             ('karenfontechawo@gmail.com','123karenfonte','Karen Fontecha Regino','JO','','user'),
             ('cemarce@gmail.com','123cemarce@gm','Claudia Moncada Caicedo','JO','','user'),
             ('javilopco@gmail.com','123javilopco@','JAVIER LOPEZ CORREDIN','JO','','user'),
-
+            ('Yerli.arriagacontaduria@gmail.com','582Yerli.arriagaco','yerli arriaga','JO','','user'),
 
             ('usuario@usuario','2','usuarios','SN','','user'),
         ]:
