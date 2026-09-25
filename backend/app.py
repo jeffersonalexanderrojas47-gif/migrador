@@ -442,7 +442,7 @@ def init_db():
             ('jdpolo1997@gmail.com','jdpolo19971','', 'JO','3145354685','user'),
             ('eudacruzo@gmail.com','eudacruzo83','', 'JO','3146059810','user'),
             ('solucioneswo08@gmail.com','soluciones43','', 'JO','3126331715','user'),
-            ('usuario@usuario','2','usuarios','SN','','user'),
+            ('usuario@usuario','22','usuarios','SN','','user'),
         ]:
             if not db.execute("SELECT id FROM users WHERE email=?", (email,)).fetchone():
                 db.execute("INSERT INTO users (email,password_hash,name,initials,phone,role) VALUES (?,?,?,?,?,?)",
