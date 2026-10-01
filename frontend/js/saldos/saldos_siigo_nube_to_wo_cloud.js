@@ -181,7 +181,21 @@ async function _startSalCldETLRun(params){
     // ── Detectar columnas ────────────────────────────────────────
     const H=data.hdrs;
     const HN=H.map(salNorm);
-    const fi=(terms)=>HN.findIndex(h=>terms.some(t=>h===salCldNorm(t)||h.includes(salCldNorm(t))));
+    const fi=(terms)=>{
+      // Primero: coincidencia EXACTA, respetando el orden de prioridad de los términos
+      for(const t of terms){
+        const tn=salCldNorm(t);
+        const idx=HN.findIndex(h=>h===tn);
+        if(idx>=0)return idx;
+      }
+      // Luego: coincidencia PARCIAL (substring), también respetando prioridad
+      for(const t of terms){
+        const tn=salCldNorm(t);
+        const idx=HN.findIndex(h=>h.includes(tn));
+        if(idx>=0)return idx;
+      }
+      return -1;
+    };
 
     const cTrans  = fi(['transaccional']);
     const cCuenta = fi(['codigo cuenta contable','cuenta contable','codigo cuenta']);
@@ -309,28 +323,23 @@ async function _startSalCldETLRun(params){
       if(Math.abs(saldo)<=0.001)return;
       const {deb,cred}=salCldDebitoCred(cuenta,saldo);
       out.push({
-        ...encabBase,
-        'Detalle: CuentaContable':     cuenta,
-        'Detalle: Nota':               nota,
-        'Detalle: TerceroExterno':     nit,
-        'Detalle: Débito':             deb,
-        'Detalle: Crédito':            cred,
-        'Detalle: Vencimiento':        fecha,
-        'Detalle: Vendedor':           '',
-        'Detalle: Cheque':             '',
-        'Detalle: Banco Cheque':       '',
-        'Detalle: Centro Costos':      '',
-        'Detalle: PorcentajeRetención':'',
-        'Detalle: BaseRetención':      '',
-        'Detalle: PagoRetención':      '',
-        'Detalle: Tipo Base':          '',
-        'Detalle: Código Centro Costos':'',
+        'Cuenta *':                cuenta,
+        'Concepto':                nota,
+        'Tercero *':               nit,
+        'Débito *':                deb,
+        'Crédito *':               cred,
+        'Centro costos':           '',
+        'Fecha de Vencimiento *':  fecha,
+        'Base Ret':                '',
+        '% Ret':                   '',
+        'Vendedor ':               '',
+        'Cuentas Originales':      cuenta,
       });
     });
 
     // Estadísticas
-    const sumDeb=out.reduce((a,r)=>a+(r['Detalle: Débito']||0),0);
-    const sumCred=out.reduce((a,r)=>a+(r['Detalle: Crédito']||0),0);
+    const sumDeb=out.reduce((a,r)=>a+(r['Débito *']||0),0);
+    const sumCred=out.reduce((a,r)=>a+(r['Crédito *']||0),0);
     salCldLog(`✅ ${out.length} registros generados`,'o','Transformación');
     salCldLog(`   Débitos:  $${sumDeb.toLocaleString('es-CO',{minimumFractionDigits:2})}`,'i','Estadísticas');
     salCldLog(`   Créditos: $${sumCred.toLocaleString('es-CO',{minimumFractionDigits:2})}`,'i','Estadísticas');
