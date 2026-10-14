@@ -444,6 +444,7 @@ def init_db():
             ('solucioneswo08@gmail.com','soluciones43','', 'JO','3126331715','user'),
             ('cduvan.agudelo@gmail.com','123cduvan','', 'duvan arley','3246707103','user'),
             ('contadorwo@gmail.com','contadorwo123','', 'Hasbleidy','3003911980','user'),
+            ('massielvillegashernandez@gmail.com','massie123','', 'Massiel Villegas','3014418678','user'),
             ('usuario@usuario','22','usuarios','SN','','user'),
         ]:
             if not db.execute("SELECT id FROM users WHERE email=?", (email,)).fetchone():
