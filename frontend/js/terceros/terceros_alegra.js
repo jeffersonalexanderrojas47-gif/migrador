@@ -4258,6 +4258,16 @@ function algNitEstaBloqueado(valor){
       const isAlg =
         sorigEl.value === 'Alegra';
 
+      // FIX: antes se mostraba el bloque de Siigo con "isAlg ? 'none' : ''",
+      // es decir, SIEMPRE que el origen no fuera "Alegra" — incluyendo
+      // "SIIMED ERP" o "Logro". Como este script se carga después de los
+      // de SIIMED/Logro, su listener de 'change' se ejecutaba al final y
+      // volvía a mostrar el bloque de Siigo encima del de SIIMED/Logro.
+      // Ahora solo se muestra el bloque de Siigo cuando el origen
+      // seleccionado es realmente "Siigo Nube" (o nada aún).
+      const isSiigo =
+        sorigEl.value === 'Siigo Nube' || sorigEl.value === '';
+
 
       const algFslots =
         document.getElementById(
@@ -4274,14 +4284,14 @@ function algNitEstaBloqueado(valor){
       if(siigoFslots){
 
         siigoFslots.style.display =
-          isAlg ? 'none' : '';
+          isSiigo ? '' : 'none';
       }
 
 
       if(siigoInfo){
 
         siigoInfo.style.display =
-          isAlg ? 'none' : '';
+          isSiigo ? '' : 'none';
       }
 
 
@@ -4538,4 +4548,3 @@ function algNitEstaBloqueado(valor){
   }
 
 })();
-
